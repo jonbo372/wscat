@@ -140,6 +140,7 @@ program
       "If you don't provide a value, it will be prompted for."
   )
   .option('--no-color', 'Run without color')
+  .option('--verbose-control-frames', 'Print all the websocket control frames')
   .option(
     '--slash',
     'Enable slash commands for control frames ' +
@@ -323,19 +324,23 @@ if (program.listen) {
     });
 
     ws.on('ping', () => {
-      wsConsole.print(
-        Console.Types.Incoming,
-        'Received ping',
-        Console.Colors.Blue
-      );
+      if (program.verboseControlFrames) {
+        wsConsole.print(
+          Console.Types.Incoming,
+          'Received ping',
+          Console.Colors.Blue
+        );
+      }
     });
 
     ws.on('pong', () => {
-      wsConsole.print(
-        Console.Types.Incoming,
-        'Received pong',
-        Console.Colors.Blue
-      );
+      if (program.verboseControlFrames) {
+        wsConsole.print(
+          Console.Types.Incoming,
+          'Received pong',
+          Console.Colors.Blue
+        );
+      }
     });
 
     wsConsole.on('close', () => {
